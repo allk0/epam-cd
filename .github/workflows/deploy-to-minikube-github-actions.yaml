@@ -8,6 +8,16 @@ jobs:
     name: build Node.js Docker Image and deploy to minikube
     steps:
     - uses: actions/checkout@v2
+    - name: Debug Kubernetes Pods & Logs
+      run: |
+    echo "=== STATUS PODÓW ==="
+    kubectl get pods
+    
+    echo "=== SZCZEGÓŁY PODÓW ==="
+    kubectl describe pods -l app=nodejs-app
+    
+    echo "=== LOGI Z APLIKACJI ==="
+    kubectl logs deployment/nodejs-app --tail=50
     - name: Start minikube
       uses: medyagh/setup-minikube@master
     - name: Try the cluster !
