@@ -23,7 +23,7 @@ jobs:
       run:
         minikube kubectl -- apply -f k8s-node-app.yaml
     - name: Wait for Deployment to be Ready
-        run: |
+      run: |
           minikube kubectl -- rollout status deployment/nodejs-app --timeout=90s
 
     - name: Debug Kubernetes Pods & Logs
