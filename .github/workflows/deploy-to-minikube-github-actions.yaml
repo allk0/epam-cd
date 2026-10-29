@@ -21,8 +21,11 @@ jobs:
           docker images
     - name: Deploy to minikube
       run:
-        
         minikube kubectl -- apply -f k8s-node-app.yaml
+    - name: Wait for Deployment to be Ready
+        run: |
+          minikube kubectl -- rollout status deployment/nodejs-app --timeout=90s
+
     - name: Debug Kubernetes Pods & Logs
       run: |
         # 1. Ładowanie konfiguracji minikube dla kubectl i dockera
