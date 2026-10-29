@@ -10,6 +10,8 @@ jobs:
     - uses: actions/checkout@v2
     - name: Debug Kubernetes Pods & Logs
       run: |
+        # 1. Ładowanie konfiguracji minikube dla kubectl i dockera
+        eval $(minikube -p minikube docker-env)
         echo "=== STATUS PODÓW ==="
         kubectl get pods
     
