@@ -10,14 +10,14 @@ jobs:
     - uses: actions/checkout@v2
     - name: Debug Kubernetes Pods & Logs
       run: |
-    echo "=== STATUS PODÓW ==="
-    kubectl get pods
+        echo "=== STATUS PODÓW ==="
+        kubectl get pods
     
-    echo "=== SZCZEGÓŁY PODÓW ==="
-    kubectl describe pods -l app=nodejs-app
+        echo "=== SZCZEGÓŁY PODÓW ==="
+        kubectl describe pods -l app=nodejs-app
     
-    echo "=== LOGI Z APLIKACJI ==="
-    kubectl logs deployment/nodejs-app --tail=50
+        echo "=== LOGI Z APLIKACJI ==="
+        kubectl logs deployment/nodejs-app --tail=50
     - name: Start minikube
       uses: medyagh/setup-minikube@master
     - name: Try the cluster !
