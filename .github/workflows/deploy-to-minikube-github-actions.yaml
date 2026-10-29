@@ -8,18 +8,6 @@ jobs:
     name: build Node.js Docker Image and deploy to minikube
     steps:
     - uses: actions/checkout@v2
-    - name: Debug Kubernetes Pods & Logs
-      run: |
-        # 1. Ładowanie konfiguracji minikube dla kubectl i dockera
-        eval $(minikube -p minikube docker-env)
-        echo "=== STATUS PODÓW ==="
-        kubectl get pods
-    
-        echo "=== SZCZEGÓŁY PODÓW ==="
-        kubectl describe pods -l app=nodejs-app
-    
-        echo "=== LOGI Z APLIKACJI ==="
-        kubectl logs deployment/nodejs-app --tail=50
     - name: Start minikube
       uses: medyagh/setup-minikube@master
     - name: Try the cluster !
@@ -33,7 +21,20 @@ jobs:
           docker images
     - name: Deploy to minikube
       run:
+        eval $(minikube -p minikube docker-env)
         kubectl apply -f k8s-node-app.yaml
+    - name: Debug Kubernetes Pods & Logs
+      run: |
+        # 1. Ładowanie konfiguracji minikube dla kubectl i dockera
+        eval $(minikube -p minikube docker-env)
+        echo "=== STATUS PODÓW ==="
+        kubectl get pods
+    
+        echo "=== SZCZEGÓŁY PODÓW ==="
+        kubectl describe pods -l app=nodejs-app
+    
+        echo "=== LOGI Z APLIKACJI ==="
+        kubectl logs deployment/nodejs-app --tail=50
     - name: Test service URLs
       run: |
           minikube service list
